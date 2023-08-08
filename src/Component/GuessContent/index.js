@@ -9,28 +9,35 @@ const GuessBox = styled.div`
     border-style: solid;
     height: 2rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
     padding-left: 0.5rem;
 `
 
-const GuessContent = ({guess, guessTwo}) => {
+const GuessContent = ({guesses, rightAnswer, isAnswerCorrect}) => {
     return (
         <GuessesContainer>
-            <GuessBox>
-                {guess}
-            </GuessBox>
+            {!isAnswerCorrect && <div>
+                <GuessBox>
+                    {guesses[0] && guesses[0]}
+                </GuessBox>
 
-            <GuessBox>
-                {guessTwo}
-            </GuessBox>
+                <GuessBox>
+                    {guesses[1] && guesses[1]}
+                </GuessBox>
 
-            <GuessBox>
-            </GuessBox>
+                <GuessBox>
+                    {guesses[2] && guesses[2]}
+                </GuessBox>
 
-            <GuessBox>
-            </GuessBox>
+                <GuessBox>
+                    {guesses[3] && guesses[3]}
+                </GuessBox>
 
-            <GuessBox>
-            </GuessBox>
+                <GuessBox>
+                    {guesses[4] && guesses[4]}
+                </GuessBox>
+            </div>}
+            {isAnswerCorrect && <div>You did it! {rightAnswer}</div>}
         </GuessesContainer>
 
     )
