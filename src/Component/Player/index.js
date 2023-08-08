@@ -5,7 +5,6 @@ import { Typeahead } from "react-bootstrap-typeahead"
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
-import { Form } from "react-bootstrap";
 
 const StyledPlayerContainer = styled.div`
     background: black;
@@ -48,18 +47,6 @@ const Player = ({guesses, setGuesses}) => {
         <StyledPlayerContainer>
             <StyledPlayer>
                 <PlayButton onClick={playMusic}>Play</PlayButton>
-                <Form.Group>
-                <Form.Label>Single Selection</Form.Label>
-                <Typeahead
-                        id={'Select from available songs'}
-                        onChange={(selected) => {
-                            setUserGuess(selected[0])
-                        }}
-                        options={getAvailableSongs()}
-                        placeholder='Know it? Guess it!'
-                        selected={[userGuess]}
-                    />
-                </Form.Group>
                 <form onSubmit={handleSubmit}>
                     <Typeahead
                         id={'Select from available songs'}
