@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { styled } from "styled-components"
 import { getAvailableSongs } from "../Home/configuration"
 import { Typeahead } from "react-bootstrap-typeahead"
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const StyledPlayerContainer = styled.div`
     background: black;
@@ -30,6 +32,46 @@ const PlayButton = styled.button`
 const Player = ({guesses, setGuesses}) => {
     const [userGuess, setUserGuess] = useState('')
     const [guessNumber, setGuessNumber] = useState(1)
+    const [audio, setAudio] = useState(null)
+    const [playingMusic, setPlayingMusic] = useState(false)
+
+    const creds = {
+        accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
+    }
+
+    const client = new S3Client({
+        region: process.env.REACT_APP_REGION,
+        credentials: creds
+    })
+
+    const command = new GetObjectCommand({
+        Bucket: "jeardle",
+        Key: "beautiful"
+    })
+
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const url = await getSignedUrl(client, command, { expiresIn: 3600 })
+
+                setAudio(new Audio(url))
+              } catch (err) {
+                console.error(err);
+              }
+        }
+        fetchData()
+    }, [])
+
+
+    useEffect(() => {
+        if (playingMusic) {
+            audio.play()
+        } else if (audio !== null) {
+            audio.pause()
+        }
+    }, [playingMusic])
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -40,7 +82,7 @@ const Player = ({guesses, setGuesses}) => {
     }
 
     function playMusic() {
-        console.log('play the music')
+        setPlayingMusic(!playingMusic)
     }
 
     return (
