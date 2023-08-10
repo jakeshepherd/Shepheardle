@@ -29,7 +29,7 @@ const PlayButton = styled.button`
     margin-bottom: 2rem;
 `
 
-const Player = ({guesses, setGuesses}) => {
+const Player = ({guesses, setGuesses, rightAnswer}) => {
     const [userGuess, setUserGuess] = useState('')
     const [guessNumber, setGuessNumber] = useState(1)
     const [audio, setAudio] = useState(null)
@@ -46,10 +46,9 @@ const Player = ({guesses, setGuesses}) => {
     })
 
     const command = new GetObjectCommand({
-        Bucket: "jeardle",
-        Key: "beautiful"
+        Bucket: process.env.REACT_APP_BUCKET,
+        Key: rightAnswer
     })
-
 
     useEffect(() => {
         async function fetchData() {
@@ -62,7 +61,7 @@ const Player = ({guesses, setGuesses}) => {
               }
         }
         fetchData()
-    }, [])
+    }, [rightAnswer])
 
 
     useEffect(() => {
