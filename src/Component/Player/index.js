@@ -30,10 +30,12 @@ const PlayButton = styled.button`
 `
 
 const Player = ({guesses, setGuesses, rightAnswer}) => {
+    const songLengthIncrement = 2000
     const [userGuess, setUserGuess] = useState('')
     const [guessNumber, setGuessNumber] = useState(1)
     const [audio, setAudio] = useState(null)
     const [playingMusic, setPlayingMusic] = useState(false)
+    const [songLength, setSongLength] = useState(songLengthIncrement)
 
     const creds = {
         accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -67,10 +69,20 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
     useEffect(() => {
         if (playingMusic) {
             audio.play()
+            setTimeout(() => {
+                audio.pause()
+                setPlayingMusic(false)
+                audio.load()
+            }, songLength)
         } else if (audio !== null) {
             audio.pause()
         }
     }, [playingMusic])
+
+    useEffect(() => {
+        setSongLength(songLength + songLengthIncrement)
+        setPlayingMusic(false)
+    }, [guesses])
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -87,7 +99,7 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
     return (
         <StyledPlayerContainer>
             <StyledPlayer>
-                <PlayButton onClick={playMusic}>Play</PlayButton>
+                <PlayButton onClick={playMusic}>{playingMusic ? 'Pause' : 'Play'}</PlayButton>
                 <form onSubmit={handleSubmit}>
                     <Typeahead
                         id={'Select from available songs'}
