@@ -75,7 +75,6 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
         fetchData()
     }, [songToPlay])
 
-
     useEffect(() => {
         if (playingMusic) {
             audio.play()
@@ -124,7 +123,7 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
                         id="basic-typeahead-single"
                         labelKey="name"
                         onChange={setSingleSelections}
-                        options={Object.values(getAvailableSongs())}
+                        options={getAvailableSongs()}
                         placeholder="Know it? Guess it!"
                         selected={singleSelections}
                     />

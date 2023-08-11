@@ -12,7 +12,11 @@ const Home = () => {
     const currentDate = moment().format('DD-MM-YYYY')
 
     useEffect(() => {
-        setRightAnswer(getAvailableSongs()[currentDate].name)
+        const rightAnswerFromConfig = getAvailableSongs().filter(item => {
+            return item.date === currentDate
+        });
+
+        setRightAnswer(rightAnswerFromConfig[0].name)
 
         Object.keys(guesses).map((key) => {
             if (guesses[key].toLowerCase() === rightAnswer.toLowerCase()) {
