@@ -23,14 +23,21 @@ const StyledPlayer = styled.div`
 `
 
 const PlayButton = styled.button`
-    height: 5rem;
-    width: 5rem;
+    height: 4rem;
+    width: 4rem;
     border-radius: 50%;
     cursor: pointer;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 `
 
-const Player = ({guesses, setGuesses, rightAnswer}) => {
+const SubmitButton = styled.button`
+    margin-top: 1rem;
+    background: black;
+    color: white;
+    border-color: white;
+`
+
+const Player = ({guesses, setGuesses, songToPlay}) => {
     const songLengthIncrement = 2000
     const [guessNumber, setGuessNumber] = useState(1)
     const [audio, setAudio] = useState(null)
@@ -50,7 +57,7 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
 
     const command = new GetObjectCommand({
         Bucket: process.env.REACT_APP_BUCKET,
-        Key: rightAnswer
+        Key: songToPlay
     })
 
     useEffect(() => {
@@ -64,7 +71,7 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
               }
         }
         fetchData()
-    }, [rightAnswer])
+    }, [songToPlay])
 
 
     useEffect(() => {
@@ -88,7 +95,6 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
     function handleSubmit(event) {
         event.preventDefault()
 
-        console.log(singleSelections)
         if (singleSelections[0]) {
             const name = singleSelections[0].name
             setGuesses({...guesses, [guessNumber]: name})
@@ -104,6 +110,7 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
     }
 
     return (
+
         <StyledPlayerContainer>
             <StyledPlayer>
                 <PlayButton onClick={playMusic}>{playingMusic ? 'Pause' : 'Play'}</PlayButton>
@@ -112,11 +119,11 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
                         id="basic-typeahead-single"
                         labelKey="name"
                         onChange={setSingleSelections}
-                        options={getAvailableSongs()}
+                        options={Object.values(getAvailableSongs())}
                         placeholder="Know it? Guess it!"
                         selected={singleSelections}
                     />
-                    <button type="submit">Submit</button>
+                    <SubmitButton type="submit">Submit</SubmitButton>
                 </form>
             </StyledPlayer>
         </StyledPlayerContainer>

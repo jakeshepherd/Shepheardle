@@ -1,3 +1,11 @@
+# Adding new songs
+Record a song, upload it to S3 bucket with the date you want it to play.
+Add the actual song name to the tags on the bucket so you can remember which one it is
+
+Then, go to configuration.js in the app, add the song name with a key of the date that you set in the s3 bucket
+Basically, follow the precedent to how it's been done so far.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
