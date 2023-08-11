@@ -11,6 +11,7 @@ const GuessBox = styled.div`
     margin-top: 1rem;
     margin-bottom: 1rem;
     padding-left: 0.5rem;
+    border-color: #3486eb;
 `
 
 const GuessIcon = styled.img`

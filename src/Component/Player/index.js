@@ -8,10 +8,9 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { ProgressBar } from "react-bootstrap";
 
 const StyledPlayerContainer = styled.div`
-    background: black;
+    background: #3486eb;
 `
 
 const StyledPlayer = styled.div`
@@ -29,13 +28,24 @@ const PlayButton = styled.button`
     border-radius: 50%;
     cursor: pointer;
     margin-bottom: 1rem;
+    border-color: #3486eb;
 `
 
 const SubmitButton = styled.button`
     margin-top: 1rem;
-    background: black;
+    background: #3486eb;
     color: white;
     border-color: white;
+    border-radius: 12px;
+    font-size: 20px;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+`
+
+const StyledAudioButton = styled.img`
+    width: 70%;
+    height: auto;
 `
 
 const Player = ({guesses, setGuesses, songToPlay}) => {
@@ -45,7 +55,6 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     const [playingMusic, setPlayingMusic] = useState(false)
     const [songLength, setSongLength] = useState(songLengthIncrement)
     const [singleSelections, setSingleSelections] = useState([])
-    const [audioTiming, setAudioTiming] = useState(0)
 
     const creds = {
         accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -78,7 +87,6 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     useEffect(() => {
         if (playingMusic) {
             audio.play()
-            setAudioTiming(audio.currentTime)
             setTimeout(() => {
                 audio.pause()
                 setPlayingMusic(false)
@@ -100,9 +108,7 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
         if (singleSelections[0]) {
             const name = singleSelections[0].name
             setGuesses({...guesses, [guessNumber]: name})
-
             setGuessNumber(guessNumber + 1)
-
             setSingleSelections([])
         }
     }
@@ -112,12 +118,12 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     }
 
     return (
-
         <StyledPlayerContainer>
             <StyledPlayer>
-                <PlayButton onClick={playMusic}>{playingMusic ? 'Pause' : 'Play'}</PlayButton>
-                {/* // @todo -- this doesnt work properly */}
-                <ProgressBar now={audio && audio.currentTime} max={audio && audio.duration}/>
+                <PlayButton onClick={playMusic}>
+                    {playingMusic ? <StyledAudioButton src='https://img.icons8.com/?size=512&id=Z2aInWmsldJ6&format=png'/>
+                       : <StyledAudioButton src='https://img.icons8.com/?size=512&id=nMSSSpYre8pz&format=png'/>}
+                </PlayButton>
                 <form onSubmit={handleSubmit}>
                     <Typeahead
                         id="basic-typeahead-single"

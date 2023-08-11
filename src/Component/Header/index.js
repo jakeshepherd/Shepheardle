@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 const StyledHeader = styled.div`
-    background: black;
+    background: #3486eb;
 `
 
 const StyledTitle = styled.h1`
