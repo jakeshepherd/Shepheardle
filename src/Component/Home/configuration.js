@@ -1,9 +1,9 @@
 const getAvailableSongs = () => {
     return [
-        'You\'re Beautiful',
-        'Ode to Sleep',
-        'Car Radio',
-        'That\'s What Makes you Beautiful',
+        { name: 'You\'re Beautiful'},
+        { name: 'Ode to Sleep'},
+        { name: 'Car Radio'},
+        { name: 'That\'s What Makes you Beautiful'},
     ]
 }
 

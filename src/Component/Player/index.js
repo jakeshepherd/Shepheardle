@@ -3,6 +3,7 @@ import { styled } from "styled-components"
 import { getAvailableSongs } from "../Home/configuration"
 import { Typeahead } from "react-bootstrap-typeahead"
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -31,11 +32,11 @@ const PlayButton = styled.button`
 
 const Player = ({guesses, setGuesses, rightAnswer}) => {
     const songLengthIncrement = 2000
-    const [userGuess, setUserGuess] = useState('')
     const [guessNumber, setGuessNumber] = useState(1)
     const [audio, setAudio] = useState(null)
     const [playingMusic, setPlayingMusic] = useState(false)
     const [songLength, setSongLength] = useState(songLengthIncrement)
+    const [singleSelections, setSingleSelections] = useState([]);
 
     const creds = {
         accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -82,14 +83,20 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
     useEffect(() => {
         setSongLength(songLength + songLengthIncrement)
         setPlayingMusic(false)
-    }, [guesses])
+    }, [guessNumber])
 
     function handleSubmit(event) {
         event.preventDefault()
 
-        setGuessNumber(guessNumber + 1)
-        setGuesses([...guesses, userGuess])
-        setUserGuess('')
+        console.log(singleSelections)
+        if (singleSelections[0]) {
+            const name = singleSelections[0].name
+            setGuesses({...guesses, [guessNumber]: name})
+
+            setGuessNumber(guessNumber + 1)
+
+            setSingleSelections([])
+        }
     }
 
     function playMusic() {
@@ -102,13 +109,12 @@ const Player = ({guesses, setGuesses, rightAnswer}) => {
                 <PlayButton onClick={playMusic}>{playingMusic ? 'Pause' : 'Play'}</PlayButton>
                 <form onSubmit={handleSubmit}>
                     <Typeahead
-                        id={'Select from available songs'}
-                        onChange={(selected) => {
-                            setUserGuess(selected[0])
-                        }}
+                        id="basic-typeahead-single"
+                        labelKey="name"
+                        onChange={setSingleSelections}
                         options={getAvailableSongs()}
-                        placeholder='Know it? Guess it!'
-                        selected={[userGuess]}
+                        placeholder="Know it? Guess it!"
+                        selected={singleSelections}
                     />
                     <button type="submit">Submit</button>
                 </form>
