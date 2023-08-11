@@ -117,7 +117,7 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
         <StyledPlayerContainer>
             <StyledPlayer>
                 <PlayButton onClick={playMusic}>{playingMusic ? 'Pause' : 'Play'}</PlayButton>
-                // @todo -- this doesnt work properly
+                {/* // @todo -- this doesnt work properly */}
                 <ProgressBar now={audio && audio.currentTime} max={audio && audio.duration}/>
                 <form onSubmit={handleSubmit}>
                     <Typeahead
