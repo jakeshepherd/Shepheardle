@@ -3,12 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.387.0",
+    "@aws-sdk/s3-request-presigner": "^3.388.0",
+    "@loadingio/loading-bar": "^0.1.1",
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3.1",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
+    "react-bootstrap-typeahead": "^6.2.3",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.0.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
