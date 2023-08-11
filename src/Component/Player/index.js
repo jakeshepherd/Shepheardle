@@ -8,6 +8,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { ProgressBar } from "react-bootstrap";
 
 const StyledPlayerContainer = styled.div`
     background: black;
@@ -43,7 +44,8 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     const [audio, setAudio] = useState(null)
     const [playingMusic, setPlayingMusic] = useState(false)
     const [songLength, setSongLength] = useState(songLengthIncrement)
-    const [singleSelections, setSingleSelections] = useState([]);
+    const [singleSelections, setSingleSelections] = useState([])
+    const [audioTiming, setAudioTiming] = useState(0)
 
     const creds = {
         accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
@@ -77,6 +79,7 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     useEffect(() => {
         if (playingMusic) {
             audio.play()
+            setAudioTiming(audio.currentTime)
             setTimeout(() => {
                 audio.pause()
                 setPlayingMusic(false)
@@ -114,6 +117,8 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
         <StyledPlayerContainer>
             <StyledPlayer>
                 <PlayButton onClick={playMusic}>{playingMusic ? 'Pause' : 'Play'}</PlayButton>
+                // @todo -- this doesnt work properly
+                <ProgressBar now={audio && audio.currentTime} max={audio && audio.duration}/>
                 <form onSubmit={handleSubmit}>
                     <Typeahead
                         id="basic-typeahead-single"
