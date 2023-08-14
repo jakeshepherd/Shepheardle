@@ -1,5 +1,6 @@
 
 import styled from 'styled-components'
+import logo from '../../logo.png'
 
 
 const StyledHeader = styled.div`
@@ -12,11 +13,16 @@ const StyledTitle = styled.h1`
     color: white;
 `
 
+const StyledLogo = styled.img`
+    width: 5%;
+    border-radius: 70px;
+`
+
 const Header = () => {
 
     return (
         <StyledHeader>
-            <StyledTitle>Jeardle</StyledTitle>
+            <StyledTitle><StyledLogo src={logo} /> Jeardle</StyledTitle>
         </StyledHeader>
     )
 }
