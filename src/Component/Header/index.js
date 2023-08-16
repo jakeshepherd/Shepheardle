@@ -22,7 +22,7 @@ const Header = () => {
 
     return (
         <StyledHeader>
-            <StyledTitle><StyledLogo src={logo} /> Jeardle</StyledTitle>
+            <StyledTitle><StyledLogo src={logo} /> Shepheardle</StyledTitle>
         </StyledHeader>
     )
 }
