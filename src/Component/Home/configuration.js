@@ -2114,7 +2114,7 @@ const getAvailableSongs = () => {
         },
         {
           name: "I Love Rock 'N Roll - Joan Jett",
-          date: null
+          date: "15-08-2023"
         },
         {
           name: "Graceland - Paul Simon",
@@ -2181,24 +2181,8 @@ const getAvailableSongs = () => {
           date: null
         },
         {
-            name: "Over the Rainbow - Harold Arlen",
-            date: "11-08-2023"
-        },
-        {
-            name: "Can you feel the love tonight - Elton John",
-            date: "12-08-2023"
-        },
-        {
-          name: "Hello - Adele",
-          date: "13-08-2023"
-        },
-        {
           name: "You're Beautiful - James Blunt",
           date: "14-08-2023"
-        },
-        {
-          name: "I love rock and roll - Joan Jett & the Blackhearts",
-          date: "15-08-2023"
         },
         {
           name: "Perfect - Ed Sheeran",
@@ -2207,10 +2191,6 @@ const getAvailableSongs = () => {
         {
           name: "Remember Me - Robert Lopez and Kristen Anderson-Lopez",
           date: "17-08-2023"
-        },
-        {
-          name: "That's What Makes you Beautiful - One Direction",
-          date: null
         },
         {
           name: "10 Things I Hate About You - Leah Kate",
@@ -2227,6 +2207,34 @@ const getAvailableSongs = () => {
         {
           name: "Car Radio - Twenty-One Pilots",
           date: null
+        },
+        {
+            name: "Take on Me - A-ha",
+            date: "18-08-2023"
+        },
+        {
+            name: "That's What Makes you Beautiful - One Direction",
+            date: "21-08-2023"
+        },
+        {
+            name: "The Time of My Life - Bill Medley & Jennifer Warnes",
+            date: "22-08-2023"
+        },
+        {
+            name: "The Winner Takes It All - ABBA",
+            date: "23-08-2023"
+        },
+        {
+            name: "Over the Rainbow - Harold Arlen",
+            date: "24-08-2023"
+        },
+        {
+            name: "Can you feel the love tonight - Elton John",
+            date: "25-08-2023"
+        },
+        {
+          name: "Hello - Adele",
+          date: "28-08-2023"
         }
     ]
 }
