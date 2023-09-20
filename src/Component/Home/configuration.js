@@ -2239,6 +2239,18 @@ const getAvailableSongs = () => {
         {
             name: "You're Welcome - Dwayne Johnson",
             date: "08-09-2023"
+        },
+        {
+            name: "Circle of Life - Kyam's Kids",
+            date: "21-09-2023"
+        },
+        {
+            name: "Shape of You - Ed Sheeran, Marley & Matt",
+            date: "22-09-2023"
+        },
+        {
+            name: "Duel of Fates - John Williams & Kyam's Kids",
+            date: "23-09-2023"
         }
     ]
 }
