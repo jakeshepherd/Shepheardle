@@ -2210,35 +2210,35 @@ const getAvailableSongs = () => {
         },
         {
             name: "Take on Me - A-ha",
-            date: "18-08-2023"
+            date: "23-04-2025"
         },
         {
             name: "That's What Makes you Beautiful - One Direction",
-            date: "21-08-2023"
+            date: "24-04-2025"
         },
         {
             name: "The Time of My Life - Bill Medley & Jennifer Warnes",
-            date: "22-08-2023"
+            date: "25-04-2025"
         },
         {
             name: "The Winner Takes It All - ABBA",
-            date: "23-08-2023"
+            date: "26-04-2025"
         },
         {
             name: "Over the Rainbow - Harold Arlen",
-            date: "24-08-2023"
+            date: "27-04-2025"
         },
         {
             name: "Can you feel the love tonight - Elton John",
-            date: "25-08-2023"
+            date: "28-04-2025"
         },
         {
           name: "Hello - Adele",
-          date: "28-08-2023"
+          date: "29-04-2025"
         },
         {
-            name: "You're Welcome - Dwayne Johnson",
-            date: "08-09-2023"
+          name: "You're Welcome - Dwayne Johnson",
+          date: "30-04-2025"
         },
         {
             name: "Circle of Life - Kyam's Kids",
