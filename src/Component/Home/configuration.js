@@ -2214,11 +2214,11 @@ const getAvailableSongs = () => {
         },
         {
             name: "That's What Makes you Beautiful - One Direction",
-            date: "24-04-2025"
+            date: "22-04-2025"
         },
         {
             name: "The Time of My Life - Bill Medley & Jennifer Warnes",
-            date: "25-04-2025"
+            date: "24-04-2025"
         },
         {
             name: "The Winner Takes It All - ABBA",
