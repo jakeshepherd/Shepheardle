@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react"
 import { styled } from "styled-components"
-import { getAvailableSongs } from "../Home/configuration"
+import { getAvailableSongs, getTodaysSong } from "../Home/configuration"
 import { Typeahead } from "react-bootstrap-typeahead"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const StyledPlayerContainer = styled.div`
     background: #3486eb;
@@ -56,46 +54,29 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     const [songLength, setSongLength] = useState(songLengthIncrement)
     const [singleSelections, setSingleSelections] = useState([])
 
-    const creds = {
-        accessKeyId: process.env.REACT_APP_ACCESS_KEY_ID,
-        secretAccessKey: process.env.REACT_APP_SECRET_ACCESS_KEY,
-    }
-
-    const client = new S3Client({
-        region: process.env.REACT_APP_REGION,
-        credentials: creds
-    })
-
-    const command = new GetObjectCommand({
-        Bucket: process.env.REACT_APP_BUCKET,
-        Key: songToPlay
-    })
+    // Get today's song object
+    const todaysSong = getTodaysSong(songToPlay)
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const url = await getSignedUrl(client, command, { expiresIn: 3600 })
-
-                setAudio(new Audio(url))
-              } catch (err) {
-                console.error(err);
-              }
+        if (todaysSong && todaysSong.audioUrl) {
+            setAudio(new Audio(todaysSong.audioUrl))
+        } else {
+            setAudio(null)
         }
-        fetchData()
-    }, [songToPlay])
+    }, [todaysSong])
 
     useEffect(() => {
-        if (playingMusic) {
+        if (playingMusic && audio) {
             audio.play()
             setTimeout(() => {
                 audio.pause()
                 setPlayingMusic(false)
                 audio.load()
             }, songLength)
-        } else if (audio !== null) {
+        } else if (audio) {
             audio.pause()
         }
-    }, [playingMusic])
+    }, [playingMusic, audio, songLength])
 
     useEffect(() => {
         setSongLength(songLength + songLengthIncrement)
@@ -104,7 +85,6 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
 
     function handleSubmit(event) {
         event.preventDefault()
-
         if (singleSelections[0]) {
             const name = singleSelections[0].name
             setGuesses({...guesses, [guessNumber]: name})
@@ -120,10 +100,11 @@ const Player = ({guesses, setGuesses, songToPlay}) => {
     return (
         <StyledPlayerContainer>
             <StyledPlayer>
-                <PlayButton onClick={playMusic}>
+                <PlayButton onClick={playMusic} disabled={!audio}>
                     {playingMusic ? <StyledAudioButton src='https://img.icons8.com/?size=512&id=Z2aInWmsldJ6&format=png'/>
                        : <StyledAudioButton src='https://img.icons8.com/?size=512&id=nMSSSpYre8pz&format=png'/>}
                 </PlayButton>
+                {!audio && <div style={{color: 'white'}}>No audio available for today's song.</div>}
                 <form onSubmit={handleSubmit}>
                     <Typeahead
                         id="basic-typeahead-single"

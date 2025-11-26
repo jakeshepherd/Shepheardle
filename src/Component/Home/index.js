@@ -12,21 +12,18 @@ const Home = () => {
     const currentDate = moment().format('DD-MM-YYYY')
 
     useEffect(() => {
-        const rightAnswerFromConfig = getAvailableSongs().filter(item => {
-            return item.date === currentDate
-        });
+        // Find today's song
+        const todaysSong = getAvailableSongs().find(item => item.date === currentDate)
+        setRightAnswer(todaysSong ? todaysSong.name : '')
+    }, [currentDate])
 
-        setRightAnswer(rightAnswerFromConfig[0].name)
-
-        Object.keys(guesses).map((key) => {
-            if (guesses[key].toLowerCase() === rightAnswer.toLowerCase()) {
-                setIsAnswerCorrect(true)
-                return true
-            } else {
-                return false
-            }
-        })
-    }, [guesses])
+    useEffect(() => {
+        // Check if any guess matches today's answer
+        const correct = Object.values(guesses).some(
+            guess => guess && rightAnswer && guess.toLowerCase() === rightAnswer.toLowerCase()
+        )
+        setIsAnswerCorrect(correct)
+    }, [guesses, rightAnswer])
 
     return (
         <>
@@ -34,7 +31,6 @@ const Home = () => {
             <GuessContent guesses={guesses} rightAnswer={rightAnswer} isAnswerCorrect={isAnswerCorrect}/>
             <Player guesses={guesses} setGuesses={setGuesses} songToPlay={currentDate}/>
         </>
-
     )
 }
 
